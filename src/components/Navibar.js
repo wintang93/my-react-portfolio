@@ -7,7 +7,7 @@ function Navibar() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container style={{margin: '0'}}>
-        <Navbar.Brand href="/">Sherwin Portfolio</Navbar.Brand>
+        <Navbar.Brand href="#/">Sherwin Portfolio</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
