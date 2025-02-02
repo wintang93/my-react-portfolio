@@ -12,7 +12,7 @@ function Navibar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             {/* <Link to="/" style={{ margin: '0 10px' }}>Home</Link> */}
-            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="#/">Home</Nav.Link>
             <Nav.Link href="#/about">About Me</Nav.Link>
             {/* <Link to="/about" style={{ margin: '0 10px' }}>About</Link> */}
             <Nav.Link href="#/contact">Contact Me</Nav.Link>
