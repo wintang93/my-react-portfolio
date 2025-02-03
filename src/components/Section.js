@@ -1,9 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import '../css/Styles.css';
 
-const Section = ({ children, id }) => {
+const Section = ({ children, id, bgImage }) => {
   const [isActive, setIsActive] = useState(false);
   const sectionRef = useRef(null);
+
+  console.log("Passing bgImage:", bgImage);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -27,11 +29,19 @@ const Section = ({ children, id }) => {
     };
   }, []);
 
+  const sectionStyles = useMemo(() => {
+    console.log("Computing styles... bgImage:", bgImage);
+    return bgImage ? { backgroundImage: `url(${bgImage})`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" } : {};
+  }, [bgImage]);
+
   return (
     <section 
       ref={sectionRef} 
       id={id}
       className={`section ${isActive ? 'active' : ''}`}
+      style={{
+        ...sectionStyles
+      }}
     >
       {children}
     </section>
