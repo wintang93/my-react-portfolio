@@ -22,8 +22,7 @@
 
 .Me {
     grid-row: 2 / 4;
-    height: 30rem;
-    justify-self: center;
+    height: 30vw;
 }
 
 .para2 {
