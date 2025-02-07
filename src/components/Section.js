@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
-import '../css/Styles.css';
+import '../css/Section.css'
 
 const Section = ({ children, id, bgImage }) => {
   const [isActive, setIsActive] = useState(false);

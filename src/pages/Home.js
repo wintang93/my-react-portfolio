@@ -6,8 +6,11 @@ function App() {
       <div>
       <header className="App-header">
         <h1>
-          Welcome to Sherwin's Portfolio
+          Sherwin Tang
         </h1>
+        <h6>
+          Software Engineer | Data Analyst | Machine Learing
+        </h6>
         {/* <a
           className="App-link"
           href="https://reactjs.org"
