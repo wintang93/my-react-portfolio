@@ -9,7 +9,7 @@ function App() {
           Sherwin Tang
         </h1>
         <h6>
-          Software Engineer | Data Analyst | Machine Learing
+          Software Engineer | Project Management | Data Analyst 
         </h6>
         {/* <a
           className="App-link"

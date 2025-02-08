@@ -14,44 +14,100 @@
 
 .title2 {
     display: flex;
+    justify-items: center;
     align-items: center;
     font-size: 24px;
     font-weight: bold;
     grid-column: 1 / 3;
+    width: 80%;
+    margin: 0 auto;
 }
 
-.Me {
-    grid-row: 2 / 4;
-    height: 30vw;
-}
-
-.para2 {
-    font-size: 20px;
-    grid-column: 2 / 3;
-    grid-row: 2 / 3;
-    justify-self: flex-start;
-    align-self: flex-start;
-    margin: 0 1rem;
-}
-
-.para3 {
-    font-size: 15px;
-    grid-column: 2 / 3;
-    grid-row: 3 / 4;
-    justify-self: flex-start;
-    align-self: flex-start;
-    margin: 0 1rem;
-    white-space: pre;
-}
-  
 .title2::before,
 .title2::after {
     content: " ";
     flex: 0.5 0.5;
     height: 2px;
-    background-color: black;
+    background-color: rgb(121, 121, 121);
     margin: 0 10px; /* Space between text and lines */
 }
+
+.Me {
+    height: 30vw;
+    margin: 0 auto;
+}
+
+.prof-details{
+    display: flex;
+    flex-direction: column;
+    justify-self: flex-start;
+    align-self: flex-start;
+
+    .para2 {
+        font-size: 20px;
+        text-align: left;
+        margin: 0 1rem;
+        color: red;
+    }
+
+    .para3 {
+        display: block;
+        font-size: 15px;
+        margin: 0 1rem;
+        white-space: pre-wrap;
+        text-align: left;
+
+        span{
+            padding-left: 150px;
+        }
+    }
+}
+
+.no-bullets {
+    display: block;
+    text-align: left;
+    list-style-type: none;
+    padding: 0;
+    margin: 0 1rem;
+  }
+
+.key-skills{
+    grid-column: 1 / 3;
+    display: grid;
+    grid-template-rows: auto auto;
+    gap: 1rem;
+    max-width: 80%;
+    margin: 0 auto;
+  }
+
+.title3 {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    grid-column: 1 / 3;
+    width: 50%;
+    margin: 0 auto;
+}
+
+.title3::before,
+.title3::after {
+content: " ";
+flex: 0.5 0.5;
+height: 2px;
+background-color: rgb(121, 121, 121);
+margin: 0 10px; /* Space between text and lines */
+}
+
+.tick-bullets {
+    list-style-type: '✔';
+    display: flex;
+    flex-wrap: wrap;
+    grid-column: 1 / 3;
+    gap: 3rem;
+    width: 100%;
+  }
   
 .item1 {
     grid-column: 1; /* First column */

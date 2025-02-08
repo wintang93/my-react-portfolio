@@ -28,12 +28,12 @@
   .section:nth-child(2) {
     background-color: #ffffff;
     display: grid;
-    grid-template-columns: auto auto;
-    grid-template-rows: auto 2rem auto;
-    gap: 10px; 
-    /* width: 100%; */
+    grid-template-columns: repeat(2, minmax(150px, 1fr));
+    grid-template-rows: auto auto auto;
+    max-width: 80%;
+    gap: 20px; 
     align-content: start;
-    margin: 0 auto
+    margin: 0 auto;
   }
   
   /* For horizontal slide-in */
