@@ -15,7 +15,7 @@ const Section = ({ children, id, bgImage }) => {
         //   observer.unobserve(entry.target); // Stop observing after animation
         }
       },
-      { threshold: 0.5 } // Trigger when 50% visible
+      { threshold: 0.2 } // Trigger when 50% visible
     );
 
     if (sectionRef.current) {

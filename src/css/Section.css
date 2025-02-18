@@ -35,6 +35,13 @@
     align-content: start;
     margin: 0 auto;
   }
+
+  .section:nth-child(3) {
+    justify-content: start;
+    align-items: start;
+    display: flex;
+    flex-direction: column;
+  }
   
   /* For horizontal slide-in */
   .section.left {

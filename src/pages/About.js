@@ -2,10 +2,12 @@ import React from 'react';
 import Section from '../components/Section';
 import Journey from '../assets/Journey.jpg';
 import Me from '../assets/Me.jpg';
+import OCBCBankLogo from '../assets/OCBC-Bank-Logo.jpg';
+import SMRT from '../assets/SMRT.jpg';
 import '../css/App.css';
 import '../css/About.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faList} from '@fortawesome/free-solid-svg-icons';
+import {faSquareCheck} from '@fortawesome/free-solid-svg-icons';
 
 
 export default function About() {
@@ -20,35 +22,39 @@ export default function About() {
         <h2 className='title2'>Full-Stack Developer</h2>
         <img className='Me' src={Me} alt='/'/>
         <div className='prof-details'>
-          <p className='para2'>OCBC Bank</p>
+          <p className='para2'> <img className='ocbc' src={OCBCBankLogo} alt='/' /> OCBC Bank</p>
           <p className='para3'>
             Software Engineer (Tech Lead)       
             <span>Oct 2021 – Current</span>
           </p>
           <ul className='no-bullets'>
            <li>
-            <FontAwesomeIcon icon={faList} style={{ marginRight: "8px"}}/>
-            Lead a team of developers from Singapore and China, managing development tasks and tech upgrade assignments.
+            <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
+            Led the successful decommission of monolith framework to micro-services. Fully transitioned Trade Finance module from vendor managed to in-house.
            </li>
            <li>
-            <FontAwesomeIcon icon={faList} style={{ marginRight: "8px"}}/>
-            Manage and enhance OCBC trade finance facilities using Micro-frontend and Micro-services through an Agile development framework. 
+            <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
+            Spearheaded team of 5 developers from Singapore and China and managed over 20 different micro-services through Agile development methodology. Resulted in an increase in project deliveries by more than 50%.
            </li>
            <li>
-            <FontAwesomeIcon icon={faList} style={{ marginRight: "8px"}}/>
-            Deliver more than 10 projects / enhancements through close collaboration with product owners, business analysts, and technical architects.
+            <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
+            Collaborated with cross-functional teams to align new business and regulatory requirements. The team managed to deliver all regulatory mandated projects within given timeframe while maintaining code quality and security.
            </li>
            <li>
-            <FontAwesomeIcon icon={faList} style={{ marginRight: "8px"}}/>
-            Reslove more than 1000 legacy system issues / bugs raised by users. Ensure the successful deployment of the fixes to production.
+            <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
+            Implemented Trade Finance services to Vietnam market. Allowing existing Vietnamese customers to apply for Trade Finance products online instead of over the counter, contributing to a 20% increase in Trade Finance sales in Vietnam. Future expansion includes Thailand and Indonesia.
            </li>
            <li>
-            <FontAwesomeIcon icon={faList} style={{ marginRight: "8px"}}/>
-            Work with vendors, IT security, DevOps, and various IT departments on tech projects such as decommissioning monolith frameworks, migrating codes, upgrading Kafka brokers, data migration, and disaster recovery exercises.
+            <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
+            Maintained Trade Finance micro-services codes and ensured code quality and low bug counts. The team had successfully fix and deployed over 100 legacy system issues and bugs raised by product owner and customers.
            </li>
            <li>
-            <FontAwesomeIcon icon={faList} style={{ marginRight: "8px"}}/>
-            Ensure code quality and security through code reviews, CI/CD deployment, and improving test coverage for micro-frontend and micro-services.
+            <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
+            Executed various technical upgrades and exercises to ensure the resiliency of technical systems such as Kafka broker upgrade, data migration exercise, disaster recovery system exercise.
+           </li>
+           <li>
+            <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
+            Utilized and proficient with various technical software crucial to software development such as Databases, CI/CD tools (Sonarqube and Blackduck), Kafka, Kubenetes and control-m.
            </li>
           </ul>
           <a href="/Sherwin_Tang_Software_Developer.pdf" download="Sherwin_CV.pdf">
@@ -93,10 +99,64 @@ export default function About() {
            </li>
           </ul>
         </div>
+        <div className='key-skills'>
+         <h6 className='title3'>Upskilling</h6>
+         <ul className='tick-bullets'>
+           <li>
+            Python
+           </li>
+           <li>
+            Data Analyst
+           </li>
+           <li>
+            Machine Learning
+           </li>
+          </ul>
+        </div>
       </Section>
-      
       <Section id="section3">
-        <h2>Past Experience</h2>
+      <div className='past-experiences'>
+        <h2>Past Experiences</h2>
+        <p className='para4'>SMRT Trains Ltd</p>
+        <p className='para5'>
+          Senior Executive – Strategic Planning                    
+          <span>Jul 2018 – Jul 2021</span>
+        </p>
+        <ul className='no-bullets'>
+           <li>
+            <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
+            Spearheaded the development and UAT of Kaizen engagement portal to collect employees’ initiatives to improve company’s processes through liaising with various business units.
+           </li>
+           <li>
+            <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
+            Developed PowerBI dashboard for senior management to monitor feedbacks collected through the portal. The number of new initiatives raised by employees increased by 120%.
+           </li>
+           <li>
+            <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
+            Directed the development and UAT of several digitalisation projects of maintenance approval forms through discussions with maintenance teams to understand the project requirements and workflows.
+           </li>
+           <li>
+            <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
+            Successfully improved the efficiency of maintenance approval process from 6 days to 1 day and reduced the reliance of hardcopy forms through the adoption of electronic forms.
+           </li>
+           <li>
+            <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
+            Ensured the accuracy and integrity of KPI data in reports for submission to higher authorities.
+           </li>
+           <li>
+            <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
+            Developed dashboard using PowerBI to illustrate the KPIs status for higher management review.
+           </li>
+        </ul>
+      </div>
+      <div className='past-experiences'>
+        <h2>Education</h2>
+        <p className='para4'>National University of Singapore</p>
+        <p className='para5'>
+          B.E Hons in Material Science and Engineering                    
+          <span>Aug 2014 – May 2018</span>
+        </p>
+      </div>
       </Section>
     </div>
   );
