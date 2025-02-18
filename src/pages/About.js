@@ -3,7 +3,6 @@ import Section from '../components/Section';
 import Journey from '../assets/Journey.jpg';
 import Me from '../assets/Me.jpg';
 import OCBCBankLogo from '../assets/OCBC-Bank-Logo.jpg';
-import SMRT from '../assets/SMRT.jpg';
 import '../css/App.css';
 import '../css/About.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
