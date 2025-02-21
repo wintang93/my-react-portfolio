@@ -4,7 +4,7 @@ import Journey from '../assets/Journey.jpg';
 import Me from '../assets/Me.jpg';
 import OCBCBankLogo from '../assets/OCBC-Bank-Logo.jpg';
 import '../css/App.css';
-import '../css/About.css';
+import '../css/Experiences.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faSquareCheck} from '@fortawesome/free-solid-svg-icons';
 
@@ -29,11 +29,11 @@ export default function About() {
           <ul className='no-bullets'>
            <li>
             <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
-            Led the successful decommission of monolith framework to micro-services. Fully transitioned Trade Finance module from vendor managed to in-house.
+            Spearheaded the successful decommission of monolith framework to micro-services. Fully transitioned Trade Finance module from vendor managed to in-house.
            </li>
            <li>
             <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
-            Spearheaded team of 5 developers from Singapore and China and managed over 20 different micro-services through Agile development methodology. Resulted in an increase in project deliveries by more than 50%.
+            Led team of 5 developers from Singapore and China and managed over 20 different micro-services through Agile development methodology. Resulted in an increase in project deliveries by more than 50%.
            </li>
            <li>
             <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
@@ -119,7 +119,7 @@ export default function About() {
         <p className='para4'>SMRT Trains Ltd</p>
         <p className='para5'>
           Senior Executive – Strategic Planning                    
-          <span>Jul 2018 – Jul 2021</span>
+          <span>2018 – 2021</span>
         </p>
         <ul className='no-bullets'>
            <li>
@@ -153,7 +153,7 @@ export default function About() {
         <p className='para4'>National University of Singapore</p>
         <p className='para5'>
           B.E Hons in Material Science and Engineering                    
-          <span>Aug 2014 – May 2018</span>
+          <span>2014 – 2018</span>
         </p>
       </div>
       </Section>

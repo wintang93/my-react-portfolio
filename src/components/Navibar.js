@@ -13,7 +13,7 @@ function Navibar() {
           <Nav className="me-auto">
             {/* <Link to="/" style={{ margin: '0 10px' }}>Home</Link> */}
             <Nav.Link href="#/">Home</Nav.Link>
-            <Nav.Link href="#/about">About Me</Nav.Link>
+            <Nav.Link href="#/experiences">Experiences</Nav.Link>
             {/* <Link to="/about" style={{ margin: '0 10px' }}>About</Link> */}
             <Nav.Link href="#/contact">Contact Me</Nav.Link>
             {/* <Link to="/contact" style={{ margin: '0 10px' }}>Contact</Link> */}
