@@ -118,8 +118,7 @@ export default function About() {
         <h2>Past Experiences</h2>
         <p className='para4'>SMRT Trains Ltd</p>
         <p className='para5'>
-          Senior Executive – Strategic Planning                    
-          <span>2018 – 2021</span>
+          Senior Executive – Strategic Planning        (2018 – 2021)
         </p>
         <ul className='no-bullets'>
            <li>
@@ -152,8 +151,7 @@ export default function About() {
         <h2>Education</h2>
         <p className='para4'>National University of Singapore</p>
         <p className='para5'>
-          B.E Hons in Material Science and Engineering                    
-          <span>2014 – 2018</span>
+          B.E Hons in Material Science and Engineering        (2014 – 2018)
         </p>
       </div>
       </Section>

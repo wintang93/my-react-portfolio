@@ -2,6 +2,8 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
 
 function Navibar() {
   return (
@@ -12,10 +14,10 @@ function Navibar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             {/* <Link to="/" style={{ margin: '0 10px' }}>Home</Link> */}
-            <Nav.Link href="#/">Home</Nav.Link>
+            <Nav.Link href="#/"><FontAwesomeIcon icon={faHome} style={{ fontSize: "24px" }} /></Nav.Link>
             <Nav.Link href="#/experiences">Experiences</Nav.Link>
             {/* <Link to="/about" style={{ margin: '0 10px' }}>About</Link> */}
-            <Nav.Link href="#/contact">Contact Me</Nav.Link>
+            {/* <Nav.Link href="#/contact">Contact Me</Nav.Link> */}
             {/* <Link to="/contact" style={{ margin: '0 10px' }}>Contact</Link> */}
             <NavDropdown title="Projects" id="basic-nav-dropdown">
               <NavDropdown.Item href="#/snake">Snake Game</NavDropdown.Item>

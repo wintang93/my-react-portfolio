@@ -145,9 +145,5 @@ margin: 0 10px; /* Space between text and lines */
         margin: 0 1rem;
         white-space: pre-wrap;
         text-align: left;
-
-        span{
-            padding-left: 200px;
-        }
     }
 }
