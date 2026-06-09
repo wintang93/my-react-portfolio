@@ -6,155 +6,113 @@ import OCBCBankLogo from '../assets/OCBC-Bank-Logo.jpg';
 import '../css/App.css';
 import '../css/Experiences.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faSquareCheck} from '@fortawesome/free-solid-svg-icons';
+import { faSquareCheck, faDownload } from '@fortawesome/free-solid-svg-icons';
 
+const TECHNICAL_SKILLS = [
+  'Python', 'Java', 'JavaScript / React.js', 'HTML / CSS',
+  'LLMs & Generative AI', 'RAG / LangChain', 'Hugging Face Transformers',
+  'PyTorch / TensorFlow', 'Pinecone / Vector DBs', 'Kafka',
+  'Kubernetes / OpenShift', 'AWS (S3)', 'CI/CD (SonarQube, BlackDuck)',
+  'Oracle / PostgreSQL', 'Spring Boot', 'Streamlit', 'UNIX', 'Control-M',
+];
 
-export default function About() {
+export default function Experiences() {
   return (
     <div className="App">
       <Section id="section1" bgImage={Journey}>
-      <h2 className='title1'>Professional Experience</h2>
-      {/* <p className='para1'>My Journey</p> */}
+        <h2 className='title1'>Professional Experience</h2>
       </Section>
-      
+
       <Section id="section2">
-        <h2 className='title2'>Full-Stack Developer</h2>
-        <img className='Me' src={Me} alt='/'/>
-        <div className='prof-details'>
-          <p className='para2'> <img className='ocbc' src={OCBCBankLogo} alt='/' /> OCBC Bank</p>
-          <p className='para3'>
-            Software Engineer (Tech Lead)       
-            <span>Oct 2021 – Current</span>
-          </p>
-          <ul className='no-bullets'>
-           <li>
-            <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
-            Spearheaded the successful decommission of monolith framework to micro-services. Fully transitioned Trade Finance module from vendor managed to in-house.
-           </li>
-           <li>
-            <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
-            Led team of 5 developers from Singapore and China and managed over 20 different micro-services through Agile development methodology. Resulted in an increase in project deliveries by more than 50%.
-           </li>
-           <li>
-            <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
-            Collaborated with cross-functional teams to align new business and regulatory requirements. The team managed to deliver all regulatory mandated projects within given timeframe while maintaining code quality and security.
-           </li>
-           <li>
-            <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
-            Implemented Trade Finance services to Vietnam market. Allowing existing Vietnamese customers to apply for Trade Finance products online instead of over the counter, contributing to a 20% increase in Trade Finance sales in Vietnam. Future expansion includes Thailand and Indonesia.
-           </li>
-           <li>
-            <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
-            Maintained Trade Finance micro-services codes and ensured code quality and low bug counts. The team had successfully fix and deployed over 100 legacy system issues and bugs raised by product owner and customers.
-           </li>
-           <li>
-            <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
-            Executed various technical upgrades and exercises to ensure the resiliency of technical systems such as Kafka broker upgrade, data migration exercise, disaster recovery system exercise.
-           </li>
-           <li>
-            <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
-            Utilized and proficient with various technical software crucial to software development such as Databases, CI/CD tools (Sonarqube and Blackduck), Kafka, Kubenetes and control-m.
-           </li>
-          </ul>
-          <a href="/Sherwin_Tang_Software_Developer.pdf" download="Sherwin_CV.pdf">
-            Download PDF
-          </a>
+        <div className='two-col-layout'>
+
+          {/* Left: profile + skills */}
+          <div className='left-col'>
+            <div className='profile-card'>
+              <img className='Me' src={Me} alt='Sherwin Tang' />
+              <div className='profile-bio'>
+                <h3>Sherwin Tang</h3>
+                <p>Full-Stack Software Engineer &amp; Tech Lead with experience in trade finance systems, digital transformation, and AI/ML engineering.</p>
+                <a className='cv-download-btn' href="/Sherwin_Tang_Software_Developer.pdf" download="Sherwin_CV.pdf">
+                  <FontAwesomeIcon icon={faDownload} /> Download CV
+                </a>
+              </div>
+            </div>
+
+            <div className='key-skills'>
+              <h6 className='title3'>Technical Skills</h6>
+              <ul className='skill-badges'>
+                {TECHNICAL_SKILLS.map(skill => (
+                  <li key={skill} className='skill-badge'>{skill}</li>
+                ))}
+              </ul>
+            </div>
+
+          </div>
+
+          {/* Right: work history */}
+          <div className='right-col'>
+            <h2 className='title2'>Work Experiences</h2>
+
+            <div className='timeline'>
+
+              {/* OCBC */}
+              <div className='timeline-block'>
+                <div className='timeline-card'>
+                  <div className='timeline-card-header'>
+                    <div className='timeline-card-title'>
+                      <img className='ocbc' src={OCBCBankLogo} alt='OCBC' />
+                      <div>
+                        <p className='para2'>OCBC Bank</p>
+                        <p className='para3'>
+                          Software Engineer (Trade Finance Squad) — Team Lead
+                          <span className='date-badge'>Oct 2021 – Present</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <ul className='no-bullets'>
+                    <li><FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: '8px' }} />Led the migration from a monolithic architecture to microservices, improving system efficiency by ~50% and reducing operational costs by ~20%.</li>
+                    <li><FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: '8px' }} />Managed a cross-border development team (Singapore &amp; China) across 20+ microservices using Agile, increasing project delivery throughput.</li>
+                    <li><FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: '8px' }} />Partnered with Product Owners, UX Designers, and Business Analysts to translate new business and regulatory requirements into delivered solutions with a 100% compliance record.</li>
+                    <li><FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: '8px' }} />Spearheaded the launch of Trade Finance services in Vietnam, enabling online applications and increasing transaction volume by ~20%.</li>
+                    <li><FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: '8px' }} />Led development and deployment of the Export Documentary Collection product, introducing a fully online application channel and substantially increasing adoption.</li>
+                    <li><FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: '8px' }} />Maintained and optimised Trade Finance microservices through unit testing, legacy-issue resolution, and production deployments, improving system reliability.</li>
+                    <li><FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: '8px' }} />Executed technical upgrades for system resiliency, including Kafka broker upgrades, data-migration exercises, and disaster-recovery (DR) simulations.</li>
+                    <li><FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: '8px' }} />Delivered key enhancements: redesigned web interfaces and APIs for simpler document resubmission; improved transaction-status workflows and notifications; regionalized products across APAC; integrated third-party SSO for a smoother authentication flow.</li>
+                    <li><FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: '8px' }} />Worked across databases, data processing, and data analysis, with CI/CD tooling (SonarQube, BlackDuck), Kafka, Kubernetes, and Control-M.</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* SMRT */}
+              <div className='timeline-block'>
+                <div className='timeline-card'>
+                  <div className='timeline-card-header'>
+                    <div className='timeline-card-title'>
+                      <div>
+                        <p className='para2'>SMRT Trains Ltd</p>
+                        <p className='para3'>
+                          Senior Executive — Strategic Planning &amp; Digital Transformation
+                          <span className='date-badge'>Jul 2018 – Jul 2021</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <ul className='no-bullets'>
+                    <li><FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: '8px' }} />Led development and UAT of a Kaizen engagement portal, significantly increasing employee-driven process-improvement initiatives.</li>
+                    <li><FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: '8px' }} />Built a Power BI dashboard giving senior management real-time visibility into employee feedback and initiatives.</li>
+                    <li><FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: '8px' }} />Directed digitalisation of maintenance approval workflows, reducing approval time from 6 days to 1 day and cutting paper usage by ~75%.</li>
+                    <li><FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: '8px' }} />Ensured KPI accuracy in regulatory reports and created data-driven dashboards for management insight.</li>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
         </div>
-        <div className='key-skills'>
-         <h6 className='title3'>Key Skills</h6>
-         <ul className='tick-bullets'>
-           <li>
-            Javascript with React.js
-           </li>
-           <li>
-            HTML / CSS
-           </li>
-           <li>
-            Java
-           </li>
-           <li>
-            SQL
-           </li>
-           <li>
-            Kafka
-           </li>
-           <li>
-            UNIX
-           </li>
-           <li>
-            Kubernetes
-           </li>
-           <li>
-            control-m
-           </li>
-           <li>
-            Oracle / Postgres
-           </li>
-           <li>
-            Blackduck / Sonarqube
-           </li>
-           <li>
-            Leadership
-           </li>
-          </ul>
-        </div>
-        <div className='key-skills'>
-         <h6 className='title3'>Upskilling</h6>
-         <ul className='tick-bullets'>
-           <li>
-            Python
-           </li>
-           <li>
-            Data Analyst
-           </li>
-           <li>
-            Machine Learning
-           </li>
-          </ul>
-        </div>
-      </Section>
-      <Section id="section3">
-      <div className='past-experiences'>
-        <h2>Past Experiences</h2>
-        <p className='para4'>SMRT Trains Ltd</p>
-        <p className='para5'>
-          Senior Executive – Strategic Planning        (2018 – 2021)
-        </p>
-        <ul className='no-bullets'>
-           <li>
-            <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
-            Spearheaded the development and UAT of Kaizen engagement portal to collect employees’ initiatives to improve company’s processes through liaising with various business units.
-           </li>
-           <li>
-            <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
-            Developed PowerBI dashboard for senior management to monitor feedbacks collected through the portal. The number of new initiatives raised by employees increased by 120%.
-           </li>
-           <li>
-            <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
-            Directed the development and UAT of several digitalisation projects of maintenance approval forms through discussions with maintenance teams to understand the project requirements and workflows.
-           </li>
-           <li>
-            <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
-            Successfully improved the efficiency of maintenance approval process from 6 days to 1 day and reduced the reliance of hardcopy forms through the adoption of electronic forms.
-           </li>
-           <li>
-            <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
-            Ensured the accuracy and integrity of KPI data in reports for submission to higher authorities.
-           </li>
-           <li>
-            <FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px"}}/>
-            Developed dashboard using PowerBI to illustrate the KPIs status for higher management review.
-           </li>
-        </ul>
-      </div>
-      <div className='past-experiences'>
-        <h2>Education</h2>
-        <p className='para4'>National University of Singapore</p>
-        <p className='para5'>
-          B.E Hons in Material Science and Engineering        (2014 – 2018)
-        </p>
-      </div>
       </Section>
     </div>
   );
-  }
+}

@@ -16,19 +16,15 @@ function Navibar() {
             {/* <Link to="/" style={{ margin: '0 10px' }}>Home</Link> */}
             <Nav.Link href="#/"><FontAwesomeIcon icon={faHome} style={{ fontSize: "24px" }} /></Nav.Link>
             <Nav.Link href="#/experiences">Experiences</Nav.Link>
+            <Nav.Link href="#/education">Education</Nav.Link>
             {/* <Link to="/about" style={{ margin: '0 10px' }}>About</Link> */}
             {/* <Nav.Link href="#/contact">Contact Me</Nav.Link> */}
             {/* <Link to="/contact" style={{ margin: '0 10px' }}>Contact</Link> */}
             <NavDropdown title="Projects" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#/snake">Snake Game</NavDropdown.Item>
-              <NavDropdown.Item href="#/Timer">
-                Timer
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Item href="#/projects">AI / ML Projects</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
+              <NavDropdown.Item href="#/snake">Snake Game</NavDropdown.Item>
+              <NavDropdown.Item href="#/Timer">Timer</NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
