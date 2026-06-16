@@ -12,7 +12,7 @@ function App() {
       <div>
         <header className="App-header">
           <h1>Sherwin Tang</h1>
-          <h6>Software Engineer | AI / ML Engineer</h6>
+          <h6>Software Engineer | AI/ML Engineer</h6>
           <div>
             <FontAwesomeIcon
               icon={faLinkedin}
