@@ -1,70 +1,132 @@
-# Getting Started with Create React App
+# Sherwin Tang — React Portfolio
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A personal portfolio / online résumé built with React and deployed to GitHub Pages,
+featuring a fixed-sidebar single-page layout and an **"Ask Sherwin" AI chatbot**
+grounded on Sherwin's résumé via Claude.
 
-## Available Scripts
+🔗 **Live:** https://wintang93.github.io/my-react-portfolio/#
 
-In the project directory, you can run:
+## Tech Stack
 
-### `npm start`
+- **React 18** (Create React App), **React Router DOM v7** (hash routing for GitHub Pages)
+- **Bootstrap 5** (base CSS), **FontAwesome** (solid + brands icons)
+- **Cloudflare Worker** proxy + **Anthropic Claude (Haiku 4.5)** for the chatbot
+- **gh-pages** for deployment
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Layout — "Direction A: Fixed Sidebar Résumé"
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+A fixed 300px sidebar (`Sidebar.js`) beside a single scrolling page (`Portfolio.js`)
+with seven sections: Hero, About, Skills, Experience, Education, Projects, Contact.
+Below 880px the sidebar collapses to a sticky top bar with a hamburger menu.
 
-### `npm test`
+## Project Structure
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+src/
+  App.js                 # Sidebar + <Routes> (Portfolio, Snake, Timer)
+  components/
+    Sidebar.js           # Fixed nav: photo, contacts, smooth-scroll links, résumé
+    ChatWidget.js        # Floating "Ask Sherwin" chat bubble (bottom-right)
+  pages/
+    Portfolio.js         # The single-page résumé (renders <ChatWidget/>)
+    Snake.js, Timer.js   # Standalone toy routes
+  data/
+    chatData.js          # 50 Q&A + offline keyword matcher (fallback path)
+  css/
+    Portfolio.css, ChatWidget.css
 
-### `npm run build`
+chatbot-proxy/           # Cloudflare Worker (separate deploy — see its README)
+  src/index.js           # Proxies chat requests to Claude, grounded on the Q&A
+  knowledge.js           # The 50 Q&A as LLM grounding (mirror of chatData.js)
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Routes
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+| Path      | Component | Notes                          |
+|-----------|-----------|--------------------------------|
+| `#/`      | Portfolio | Full single-page résumé + chatbot |
+| `#/snake` | Snake     | Canvas snake game              |
+| `#/Timer` | Timer     | Interval timer                 |
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## The "Ask Sherwin" chatbot
 
-### `npm run eject`
+A floating bubble on the home page answers visitor questions about Sherwin. It has
+**two paths**: a live LLM path (default when configured) and an offline fallback.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Flow (LLM path)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+1. Visitor types a question in ChatWidget
+        │
+2. ChatWidget.send() builds `history` (the conversation so far + the new question)
+        │  POST { messages: history }
+        ▼
+3. Cloudflare Worker  (chatbot-proxy/src/index.js)
+   Builds ONE Claude request:
+     • system   = persona  +  ALL 50 Q&A   ← grounding, prompt-cached, from knowledge.js
+     • messages = the conversation history
+        │  Anthropic SDK → client.messages.create()
+        ▼
+4. Claude (Haiku 4.5) answers using the grounding already in the prompt
+        │  { answer }
+        ▼
+5. Worker returns the answer → ChatWidget renders it
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Key points:
+- **One LLM round-trip, no vector DB / RAG.** With only ~50 short facts, the entire
+  knowledge base is pasted into the system prompt and prompt-cached — simpler, cheaper,
+  and lower-latency than retrieval. (RAG earns its place at thousands of documents.)
+- **The API key never reaches the browser.** It lives as a secret on the Cloudflare
+  Worker; the static site only knows the Worker's public URL.
+- **Grounding is the prompt, not a query.** Claude doesn't "look up" `knowledge.js` —
+  the facts are an ingredient of the prompt it receives.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Flow (offline fallback)
 
-## Learn More
+If the proxy is unreachable, errors, or `REACT_APP_CHATBOT_PROXY_URL` is unset, the
+widget silently falls back to a local keyword matcher over `src/data/chatData.js` — no
+network, no LLM:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+ChatWidget → askAssistant() fails → answerQuestion() keyword-matches chatData.js → canned answer
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Configuration
 
-### Code Splitting
+The app finds the Worker via an environment variable, read at **build time**:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```
+# .env (project root) — NOT a secret; it's a public, CORS-restricted URL
+REACT_APP_CHATBOT_PROXY_URL=https://ask-sherwin-proxy.<subdomain>.workers.dev
+```
 
-### Analyzing the Bundle Size
+> `REACT_APP_*` vars are baked into the public bundle by CRA — never put a real secret
+> here. The only secret (the Anthropic API key) lives server-side on the Worker.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+To deploy / configure the Worker itself, see [`chatbot-proxy/README.md`](./chatbot-proxy/README.md).
 
-### Making a Progressive Web App
+### Editing the Q&A
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+The knowledge base lives in **two places** that must be kept in sync:
+- `src/data/chatData.js` — powers the offline fallback matcher.
+- `chatbot-proxy/knowledge.js` — grounds the LLM (redeploy the Worker after editing).
 
-### Advanced Configuration
+## Development
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```bash
+npm install
+npm start        # dev server at http://localhost:3000
+npm run build    # production build to build/
+npm run deploy   # build + publish to the gh-pages branch (live site)
+```
 
-### Deployment
+The chatbot works in `npm start` as long as `.env` points at a reachable Worker
+(deployed, or local via `npm run dev` in `chatbot-proxy/`). Without it, the offline
+fallback answers instead.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Owner
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Sherwin Tang — Software Engineer / Team Lead at OCBC Bank; NUS MTech in AI Systems.
+[LinkedIn](https://www.linkedin.com/in/sherwin-tang-software-engineer) ·
+[GitHub](https://github.com/wintang93)
