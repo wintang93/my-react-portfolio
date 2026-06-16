@@ -62,8 +62,8 @@ export default function Sidebar() {
 
       <div className="pf-sidebar-body">
         <div className="pf-contacts">
-          <a href="mailto:sherwintang93@hotmail.sg"><FontAwesomeIcon icon={faEnvelope} /> sherwintang93@hotmail.sg</a>
-          <a href="tel:+6594777959"><FontAwesomeIcon icon={faPhone} /> +65 9477 7959</a>
+          <a href="mailto:sherwintang93@gmail.com"><FontAwesomeIcon icon={faEnvelope} /> sherwintang93@gmail.com</a>
+          {/* <a href="tel:+6594777959"><FontAwesomeIcon icon={faPhone} /> +65 9477 7959</a> */}
           <a href="https://www.linkedin.com/in/sherwin-tang-software-engineer" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faLinkedin} /> LinkedIn</a>
           <a href="https://github.com/wintang93" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faGithub} /> GitHub</a>
         </div>

@@ -1,0 +1,17 @@
+{
+  "name": "ask-sherwin-proxy",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cloudflare Worker proxy that grounds the portfolio chatbot on Claude (Haiku 4.5).",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.40.0"
+  },
+  "devDependencies": {
+    "wrangler": "^3.90.0"
+  }
+}

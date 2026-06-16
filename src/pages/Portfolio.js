@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareCheck, faDownload } from '@fortawesome/free-solid-svg-icons';
 import OCBCBankLogo from '../assets/OCBC-Bank-Logo.jpg';
+import ChatWidget from '../components/ChatWidget';
 import '../css/Portfolio.css';
 
 const CV_URL = `${process.env.PUBLIC_URL}/Sherwin_Tang_Software_Developer.pdf`;
@@ -107,7 +108,7 @@ export default function Portfolio() {
         <div className="pf-eyebrow">Software Engineer · AI / ML</div>
         <h1>Hi, I'm Sherwin —<br />I build reliable,<br />explainable software.</h1>
         <p className="pf-hero-lead">
-          Full-stack engineer with <strong>7+ years</strong> of experience and 4+ years shipping production
+          Full-stack engineer at Financial Institue with <strong>7+ years</strong> of experience and 4+ years delivering production
           systems at scale — now expanding into applied AI, ML and Generative AI through an NUS MTech, with
           hands-on LLM / RAG and reasoning-based work.
         </p>
@@ -276,6 +277,9 @@ export default function Portfolio() {
           <div className="pf-footer">© {new Date().getFullYear()} Sherwin Tang · Singapore · Built with React</div>
         </div>
       </section>
+
+      {/* ---------- FLOATING CHATBOT (bottom-right of the home page) ---------- */}
+      <ChatWidget />
     </>
   );
 }
