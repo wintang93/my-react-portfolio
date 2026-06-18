@@ -9,3 +9,12 @@ ALLOWED_ORIGINS = "https://wintang93.github.io,http://localhost:3000"
 
 # ANTHROPIC_API_KEY is NOT set here — it's a secret. Set it with:
 #   npx wrangler secret put ANTHROPIC_API_KEY
+
+# KV namespace for logging brand-new questions not covered by the FAQ.
+# Create it once (free tier), then paste the printed id below:
+#   npx wrangler kv namespace create NOVEL_QUESTIONS
+#   npx wrangler kv namespace create NOVEL_QUESTIONS --preview   # for `wrangler dev`
+[[kv_namespaces]]
+binding = "NOVEL_QUESTIONS"
+id = "0aec347015c1439ab1470fc2026dc78e"
+preview_id = "5c7df202aac5477e9b1fe458d7776fe6"

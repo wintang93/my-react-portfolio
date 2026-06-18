@@ -96,6 +96,9 @@
   padding: 10px 14px; border-radius: 16px 16px 16px 4px;
   font-size: 14px; line-height: 1.55;
   border: 1px solid #ece3d4; box-shadow: 0 1px 3px rgba(74, 52, 30, 0.06);
+  /* Preserve the line/paragraph breaks the assistant emits (each new subject on
+     its own line) while still wrapping long lines. */
+  white-space: pre-wrap;
 }
 
 /* typing dots */

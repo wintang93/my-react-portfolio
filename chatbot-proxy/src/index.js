@@ -13,13 +13,24 @@
 //
 //  Request  (POST JSON): { messages: [{ role: 'user'|'assistant', content }] }
 //  Response (JSON):      { answer: "..." }
+//
+//  Two behaviours layered on top of the basic proxy:
+//   1. NOVEL-QUESTION LOGGING — the model also reports whether it could answer
+//      the latest question from the grounding FAQ. Questions it could NOT cover
+//      are "brand new" and get logged to a free Cloudflare KV namespace
+//      (NOVEL_QUESTIONS) for Sherwin to review and fold into the FAQ later.
+//   2. RESPONSE FORMATTING — the persona prompt asks for clean spacing with each
+//      new subject on its own line, and the answer is lightly normalised on the
+//      way out so paragraph breaks survive.
 // ============================================================
 
 import Anthropic from '@anthropic-ai/sdk';
 import { buildKnowledgeBlock } from '../knowledge.js';
 
 const MODEL = 'claude-haiku-4-5';
-const MAX_TOKENS = 512;
+// Headroom for the JSON envelope ({"answer": "...", "covered": ...}) around the
+// reply — the answer itself stays short (1–4 sentences) per the persona rules.
+const MAX_TOKENS = 640;
 
 // Comma-separated list of allowed origins, set via wrangler.toml [vars].
 // Falls back to allowing the known GitHub Pages origin + localhost dev.
@@ -47,10 +58,20 @@ Rules:
 - Speak about Sherwin in the third person ("Sherwin has...", "He led...").
 - Keep answers concise (1–4 sentences) and conversational.
 - If a question is off-topic or not covered by the grounding, say you don't have that detail and point them to email Sherwin at sherwintang93@gmail.com. Do NOT invent facts, dates, employers, or numbers.
-- For hiring / availability questions, be warm and encourage reaching out via email or LinkedIn.`;
+- For hiring / availability questions, be warm and encourage reaching out via email or LinkedIn.
+
+Formatting:
+- Use clean spacing. When your answer covers more than one distinct subject or point, start each new subject on its own line (separate them with a blank line so they render as distinct paragraphs).
+- For a list of items, put each item on its own line.
+- Keep a single short answer as one tidy paragraph — don't add line breaks where there's only one point.
+
+Output protocol:
+- Respond with a single JSON object and nothing else: {"answer": "<your reply to the visitor>", "covered": <true|false>}.
+- "answer" is the message the visitor should see, formatted per the rules above.
+- "covered" is true if you were able to answer the latest question from the grounding Q&A, and false if the question was off-topic or not covered by the grounding (i.e. a brand-new question you had to deflect).`;
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const origin = request.headers.get('Origin') || '';
     const allowed = (env.ALLOWED_ORIGINS
       ? env.ALLOWED_ORIGINS.split(',').map((s) => s.trim())
@@ -109,19 +130,82 @@ export default {
         messages: clean,
       });
 
-      const answer = response.content
+      const raw = response.content
         .filter((b) => b.type === 'text')
         .map((b) => b.text)
         .join('')
         .trim();
 
-      return json({ answer }, 200, cors);
+      // The model is asked to reply as {"answer", "covered"}. Parse that; if it
+      // ever returns plain prose instead, fall back to treating the whole thing
+      // as the answer (and skip novelty logging for that request).
+      const { answer, covered } = parseModelReply(raw);
+
+      // Log brand-new (uncovered) questions to KV for later review. Fire-and-
+      // forget via waitUntil so it never delays or fails the visitor's reply.
+      if (covered === false) {
+        const question = clean[clean.length - 1].content;
+        ctx.waitUntil(logNovelQuestion(env, question, answer));
+      }
+
+      return json({ answer: formatAnswer(answer) }, 200, cors);
     } catch (err) {
       const status = err instanceof Anthropic.APIError ? err.status : 502;
       return json({ error: 'Upstream error', detail: err.message }, status, cors);
     }
   },
 };
+
+// Parse the model's JSON reply. Returns { answer, covered } where covered is
+// true|false|null (null when we couldn't determine it, e.g. non-JSON output).
+export function parseModelReply(raw) {
+  // Tolerate ```json fences or stray prose around the object.
+  const match = raw.match(/\{[\s\S]*\}/);
+  if (match) {
+    try {
+      const obj = JSON.parse(match[0]);
+      if (obj && typeof obj.answer === 'string') {
+        return {
+          answer: obj.answer.trim(),
+          covered: typeof obj.covered === 'boolean' ? obj.covered : null,
+        };
+      }
+    } catch {
+      // fall through to treating raw as plain text
+    }
+  }
+  return { answer: raw, covered: null };
+}
+
+// Normalise spacing so each new subject renders as its own paragraph: collapse
+// 3+ newlines to a clean paragraph break and trim trailing spaces per line.
+export function formatAnswer(text) {
+  return text
+    .replace(/[ \t]+\n/g, '\n')   // strip trailing spaces before newlines
+    .replace(/\n{3,}/g, '\n\n')   // cap consecutive blank lines at one
+    .trim();
+}
+
+// Append a brand-new question to the NOVEL_QUESTIONS KV namespace. Each question
+// is one key (timestamp-prefixed for chronological listing); the value records
+// the question, the deflection the visitor got, and when it was asked.
+export async function logNovelQuestion(env, question, answer) {
+  if (!env.NOVEL_QUESTIONS || typeof question !== 'string') return;
+  const q = question.trim();
+  if (!q) return;
+  try {
+    const key = `${new Date().toISOString()}|${crypto.randomUUID()}`;
+    await env.NOVEL_QUESTIONS.put(
+      key,
+      JSON.stringify({ question: q, answer, askedAt: new Date().toISOString() })
+    );
+  } catch (err) {
+    // Logging is best-effort — never fail the visitor's reply over it, but DO
+    // record the failure to the Worker console (visible via `wrangler tail` or
+    // the Cloudflare dashboard) so a broken KV binding doesn't stay invisible.
+    console.error('NOVEL_QUESTIONS KV write failed:', err && err.message, err);
+  }
+}
 
 function json(obj, status, cors) {
   return new Response(JSON.stringify(obj), {

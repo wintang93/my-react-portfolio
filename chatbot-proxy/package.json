@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy"
+    "deploy": "wrangler deploy",
+    "questions": "node scripts/list-questions.mjs",
+    "questions:clear": "node scripts/clear-questions.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.40.0"
