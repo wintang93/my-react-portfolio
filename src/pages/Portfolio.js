@@ -76,7 +76,7 @@ const PROJECTS = [
     description:
       'An explainable clinical decision-support assistant for post-arthroscopic knee rehab. Neuro-symbolic (knowledge graph + rule-based reasoning) with a constrained RAG/LLM layer, so every clinical decision stays deterministic, transparent and auditable.',
     tech: ['Python', 'RAG', 'Knowledge Graph', 'Streamlit'],
-    embedUrl: null,
+    embedUrl: 'https://irs-pm-2026-01-24-grp7-wellnessbot-huj8mmxdwjxcmlijyt7dkh.streamlit.app/',
     githubUrl: null,
   },
   {
