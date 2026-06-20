@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareCheck, faDownload } from '@fortawesome/free-solid-svg-icons';
 import OCBCBankLogo from '../assets/OCBC-Bank-Logo.jpg';
@@ -99,8 +99,6 @@ const scrollTo = (id) => (e) => {
 };
 
 export default function Portfolio() {
-  const [activeEmbed, setActiveEmbed] = useState(null);
-
   return (
     <>
       {/* ---------- HERO ---------- */}
@@ -239,12 +237,14 @@ export default function Portfolio() {
               </div>
               <div className="pf-proj-actions">
                 {p.embedUrl ? (
-                  <button
+                  <a
                     className="pf-proj-btn pf-proj-btn--solid"
-                    onClick={() => setActiveEmbed(activeEmbed === p.id ? null : p.id)}
+                    href={p.embedUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    {activeEmbed === p.id ? 'Close demo' : 'Live demo'}
-                  </button>
+                    Live demo ↗
+                  </a>
                 ) : (
                   <span className="pf-proj-btn pf-proj-btn--disabled">Live demo · soon</span>
                 )}
@@ -252,11 +252,6 @@ export default function Portfolio() {
                   <a className="pf-proj-btn" href={p.githubUrl} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
                 )}
               </div>
-              {activeEmbed === p.id && p.embedUrl && (
-                <div className="pf-proj-embed">
-                  <iframe src={p.embedUrl} title={p.title} allow="clipboard-write" />
-                </div>
-              )}
             </div>
           ))}
         </div>
