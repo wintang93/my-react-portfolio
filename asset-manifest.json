@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/my-react-portfolio/static/css/main.785ede00.css",
-    "main.js": "/my-react-portfolio/static/js/main.a14ebd3e.js",
+    "main.css": "/my-react-portfolio/static/css/main.496e4cea.css",
+    "main.js": "/my-react-portfolio/static/js/main.b3026b86.js",
     "static/media/OCBC-Bank-Logo.jpg": "/my-react-portfolio/static/media/OCBC-Bank-Logo.3e749c231036adfcb026.jpg",
     "static/media/Me.jpg": "/my-react-portfolio/static/media/Me.dd3e89f0fa044f276e93.jpg",
     "index.html": "/my-react-portfolio/index.html",
-    "main.785ede00.css.map": "/my-react-portfolio/static/css/main.785ede00.css.map",
-    "main.a14ebd3e.js.map": "/my-react-portfolio/static/js/main.a14ebd3e.js.map"
+    "main.496e4cea.css.map": "/my-react-portfolio/static/css/main.496e4cea.css.map",
+    "main.b3026b86.js.map": "/my-react-portfolio/static/js/main.b3026b86.js.map"
   },
   "entrypoints": [
-    "static/css/main.785ede00.css",
-    "static/js/main.a14ebd3e.js"
+    "static/css/main.496e4cea.css",
+    "static/js/main.b3026b86.js"
   ]
 }
