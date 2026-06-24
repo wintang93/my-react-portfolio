@@ -18,3 +18,17 @@ ALLOWED_ORIGINS = "https://wintang93.github.io,http://localhost:3000"
 binding = "NOVEL_QUESTIONS"
 id = "0aec347015c1439ab1470fc2026dc78e"
 preview_id = "5c7df202aac5477e9b1fe458d7776fe6"
+
+# KV namespace for the portfolio Visit Tracker (cross-visitor analytics).
+# Create it once (free tier), then paste the printed ids below:
+#   npx wrangler kv namespace create ANALYTICS
+#   npx wrangler kv namespace create ANALYTICS --preview          # for `wrangler dev`
+[[kv_namespaces]]
+binding = "ANALYTICS"
+id = "0a795f32622a4e5b8baf18a0cba02ce6"
+preview_id = "47b5ae181f684b5abdd1a54c918c08fc"
+
+# ANALYTICS_ADMIN_KEY is NOT set here — it's a secret (gates the reset route
+# server-side). Set it with:
+#   npx wrangler secret put ANALYTICS_ADMIN_KEY
+# Use the SAME value as REACT_APP_ANALYTICS_ADMIN_KEY in the site's .env.local.

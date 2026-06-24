@@ -3,7 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareCheck, faDownload } from '@fortawesome/free-solid-svg-icons';
 import OCBCBankLogo from '../assets/OCBC-Bank-Logo.jpg';
 import ChatWidget from '../components/ChatWidget';
+import { sendEvent } from '../analyticsClient';
 import '../css/Portfolio.css';
+
+const trackDownload = () => sendEvent('download');
 
 const CV_URL = `${process.env.PUBLIC_URL}/Sherwin_Tang_Software_Developer.pdf`;
 const GITHUB_URL = 'https://github.com/wintang93';
@@ -112,7 +115,7 @@ export default function Portfolio() {
         </p>
         <div className="pf-cta-row">
           <a href="#projects" onClick={scrollTo('projects')} className="pf-btn pf-btn--solid">View my work&nbsp;→</a>
-          <a href={CV_URL} download className="pf-btn pf-btn--outline"><FontAwesomeIcon icon={faDownload} /> Résumé (PDF)</a>
+          <a href={CV_URL} download onClick={trackDownload} className="pf-btn pf-btn--outline"><FontAwesomeIcon icon={faDownload} /> Résumé (PDF)</a>
         </div>
         <div className="pf-stats">
           <div><div className="pf-stat-num">7+</div><div className="pf-stat-label">years experience</div></div>
@@ -267,7 +270,7 @@ export default function Portfolio() {
             <a href="mailto:sherwintang93@hotmail.sg" className="pf-btn pf-btn--solid">Email me</a>
             <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className="pf-btn pf-btn--outline">LinkedIn ↗</a>
             <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="pf-btn pf-btn--outline">GitHub ↗</a>
-            <a href={CV_URL} download className="pf-btn pf-btn--outline"><FontAwesomeIcon icon={faDownload} /> Résumé</a>
+            <a href={CV_URL} download onClick={trackDownload} className="pf-btn pf-btn--outline"><FontAwesomeIcon icon={faDownload} /> Résumé</a>
           </div>
           <div className="pf-footer">© {new Date().getFullYear()} Sherwin Tang · Singapore · Built with React</div>
         </div>

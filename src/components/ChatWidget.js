@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Me from '../assets/Me.jpg';
 import { GREETING, SUGGESTIONS, answerQuestion, askAssistant } from '../data/chatData';
+import { sendEvent } from '../analyticsClient';
 import '../css/ChatWidget.css';
 
 /**
@@ -48,6 +49,7 @@ export default function ChatWidget() {
     setMsgs((prev) => [...prev, { text: q, isUser: true }]);
     setInput('');
     setTyping(true);
+    sendEvent('chat'); // log to the Visit Tracker activity feed
 
     // Try the Claude-backed proxy; fall back to the local matcher on any
     // failure (or when no proxy is configured).

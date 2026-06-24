@@ -3,6 +3,7 @@ import Sidebar from './components/Sidebar';
 import Portfolio from './pages/Portfolio';
 import Snake from './pages/Snake';
 import Timer from './pages/Timer';
+import Analytics from './pages/Analytics';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/Portfolio.css';
 
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Portfolio />} />
           <Route path="/snake" element={<Snake />} />
           <Route path="/Timer" element={<Timer />} />
+          <Route path="/analytics" element={<Analytics />} />
         </Routes>
       </main>
     </div>

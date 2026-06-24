@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faPhone, faDownload, faBars, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faPhone, faDownload, faBars, faXmark, faChartLine } from '@fortawesome/free-solid-svg-icons';
 import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
 import Me from '../assets/Me.jpg';
+import { sendEvent } from '../analyticsClient';
 import '../css/Portfolio.css';
 
 const NAV = [
@@ -24,12 +25,48 @@ export default function Sidebar() {
   useEffect(() => {
     if (!onHome) return;
     const secs = NAV.map(([id]) => document.getElementById(id)).filter(Boolean);
+
+    // Section-dwell tracking for the Visit Tracker: with this rootMargin only
+    // one section is "intersecting" at a time (the one centred in the viewport).
+    // We accumulate ms spent on each into `dwell`, switching the clock whenever
+    // the active section changes, and flush the totals to the Worker on leave.
+    const dwell = {};
+    let currentId = null;
+    let enteredAt = 0;
+    const settle = () => {
+      if (currentId && enteredAt) dwell[currentId] = (dwell[currentId] || 0) + (Date.now() - enteredAt);
+    };
+
     const obs = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) setActive(e.target.id); }),
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) {
+          if (e.target.id !== currentId) {
+            settle();
+            currentId = e.target.id;
+            enteredAt = Date.now();
+          }
+          setActive(e.target.id);
+        }
+      }),
       { rootMargin: '-45% 0px -50% 0px' }
     );
     secs.forEach((s) => obs.observe(s));
-    return () => obs.disconnect();
+
+    const flush = () => {
+      settle();
+      enteredAt = currentId ? Date.now() : 0; // avoid double-counting after flush
+      const sections = {};
+      Object.keys(dwell).forEach((id) => { if (dwell[id] >= 1000) sections[id] = Math.round(dwell[id]); });
+      Object.keys(dwell).forEach((id) => { dwell[id] = 0; });
+      if (Object.keys(sections).length) sendEvent('section-dwell', { sections });
+    };
+    window.addEventListener('beforeunload', flush);
+
+    return () => {
+      flush();
+      window.removeEventListener('beforeunload', flush);
+      obs.disconnect();
+    };
   }, [onHome]);
 
   const go = useCallback((id) => (e) => {
@@ -76,14 +113,21 @@ export default function Sidebar() {
               key={id}
               href={`#${id}`}
               onClick={go(id)}
-              className={`pf-nav-link${active === id ? ' active' : ''}`}
+              className={`pf-nav-link${onHome && active === id ? ' active' : ''}`}
             >
               {label}
             </a>
           ))}
+          <a
+            href="#/analytics"
+            onClick={(e) => { e.preventDefault(); setMenuOpen(false); navigate('/analytics'); }}
+            className={`pf-nav-link${location.pathname === '/analytics' ? ' active' : ''}`}
+          >
+            <FontAwesomeIcon icon={faChartLine} /> Visit Tracker
+          </a>
         </nav>
 
-        <a className="pf-cv" href={CV_URL} download>
+        <a className="pf-cv" href={CV_URL} download onClick={() => sendEvent('download')}>
           <FontAwesomeIcon icon={faDownload} /> Download Résumé
         </a>
       </div>

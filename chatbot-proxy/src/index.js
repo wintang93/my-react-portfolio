@@ -26,6 +26,7 @@
 
 import Anthropic from '@anthropic-ai/sdk';
 import { buildKnowledgeBlock } from '../knowledge.js';
+import { recordEvent, buildSummary, resetAnalytics } from '../analytics.js';
 
 const MODEL = 'claude-haiku-4-5';
 // Headroom for the JSON envelope ({"answer": "...", "covered": ...}) around the
@@ -43,7 +44,7 @@ function corsHeaders(origin, allowed) {
   const ok = allowed.includes(origin);
   return {
     'Access-Control-Allow-Origin': ok ? origin : allowed[0],
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Max-Age': '86400',
     Vary: 'Origin',
@@ -81,6 +82,14 @@ export default {
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: cors });
     }
+
+    // ---- Analytics routes (Visit Tracker dashboard) ----
+    const path = new URL(request.url).pathname.replace(/\/+$/, '');
+    if (path === '/analytics/summary' || path === '/analytics/event' || path === '/analytics/reset') {
+      return handleAnalytics(path, request, env, ctx, cors);
+    }
+
+    // ---- Chatbot proxy (default) ----
     if (request.method !== 'POST') {
       return json({ error: 'Method not allowed' }, 405, cors);
     }
@@ -155,6 +164,45 @@ export default {
     }
   },
 };
+
+// ---- Analytics dispatch (Visit Tracker dashboard) ----
+// Routes the /analytics/* paths to the aggregation helpers in analytics.js.
+// Read-side (summary) is a GET; writes (event/reset) are POSTs.
+async function handleAnalytics(path, request, env, ctx, cors) {
+  if (!env.ANALYTICS) {
+    return json({ error: 'Analytics not configured' }, 503, cors);
+  }
+  const kv = env.ANALYTICS;
+
+  if (path === '/analytics/summary') {
+    if (request.method !== 'GET') return json({ error: 'Method not allowed' }, 405, cors);
+    try {
+      const summary = await buildSummary(kv);
+      return json(summary, 200, cors);
+    } catch (err) {
+      return json({ error: 'summary failed', detail: err.message }, 500, cors);
+    }
+  }
+
+  if (request.method !== 'POST') return json({ error: 'Method not allowed' }, 405, cors);
+
+  let body;
+  try { body = await request.json(); } catch { return json({ error: 'Invalid JSON' }, 400, cors); }
+
+  if (path === '/analytics/event') {
+    // Fire-and-forget: ack the visitor immediately, let KV writes finish after.
+    ctx.waitUntil(recordEvent(kv, body).catch((e) => console.error('analytics event failed:', e && e.message)));
+    return json({ ok: true }, 202, cors);
+  }
+
+  if (path === '/analytics/reset') {
+    const result = await resetAnalytics(kv, body && body.key, env.ANALYTICS_ADMIN_KEY);
+    if (!result.ok) return json({ error: result.error }, result.status || 400, cors);
+    return json({ ok: true }, 200, cors);
+  }
+
+  return json({ error: 'Not found' }, 404, cors);
+}
 
 // Parse the model's JSON reply. Returns { answer, covered } where covered is
 // true|false|null (null when we couldn't determine it, e.g. non-JSON output).

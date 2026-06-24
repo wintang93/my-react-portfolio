@@ -1,0 +1,426 @@
+/* ============================================================
+   Visit Tracker — Portfolio Analytics dashboard
+   Recreated from the Claude Design "Visit Tracker" reference.
+   Warm "Direction A" terracotta/cream system, matching Portfolio.css.
+   ============================================================ */
+
+.vt-root {
+  /* tokens (overridden by accent on the inline root style) */
+  --vt-bg: #faf6ef;
+  --vt-panel: #fffdf9;
+  --vt-ink: #221f1b;
+  --vt-muted: #6f6555;
+  --vt-line: #e7ddcd;
+  min-height: 100vh;
+  background: var(--vt-bg);
+  color: var(--vt-ink);
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.vt-shell {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 46px 40px 72px;
+}
+
+/* ---------- header ---------- */
+.vt-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 34px;
+}
+.vt-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font: 600 12px/1 ui-monospace, monospace;
+  letter-spacing: .22em;
+  color: var(--vt-accent);
+  text-transform: uppercase;
+}
+.vt-dot {
+  display: inline-flex;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #34c759;
+  animation: vtPulse 2.2s infinite;
+}
+.vt-title {
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(30px, 4.4vw, 44px);
+  line-height: 1.05;
+  letter-spacing: -.015em;
+  margin: 14px 0 0;
+}
+.vt-subtitle {
+  margin: 9px 0 0;
+  font-size: 14.5px;
+  color: var(--vt-muted);
+}
+
+/* range toggle */
+.vt-ranges {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.vt-range-btn {
+  padding: 8px 15px;
+  border-radius: 10px;
+  border: 1.5px solid var(--vt-line);
+  background: transparent;
+  color: var(--vt-muted);
+  font: 600 12px/1 ui-sans-serif, system-ui;
+  cursor: pointer;
+  transition: all .15s;
+}
+.vt-range-btn.active {
+  border-color: var(--vt-accent);
+  background: var(--vt-accent);
+  color: #fff;
+}
+
+/* ---------- shared card ---------- */
+.vt-card {
+  border: 1px solid var(--vt-line);
+  border-radius: 18px;
+  background: var(--vt-panel);
+}
+.vt-card--hover {
+  transition: transform .18s, box-shadow .18s;
+}
+.vt-card--hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 34px -14px rgba(74, 52, 30, .28);
+}
+
+/* ---------- hero stats ---------- */
+.vt-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.vt-stat {
+  position: relative;
+  padding: 24px 24px 22px;
+  overflow: hidden;
+}
+.vt-stat-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.vt-stat-label {
+  font: 600 11.5px/1 ui-monospace, monospace;
+  letter-spacing: .13em;
+  color: var(--vt-muted);
+  text-transform: uppercase;
+}
+.vt-stat-chip {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--vt-accent-soft);
+  color: var(--vt-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.vt-stat-valrow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.vt-stat-value {
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 600;
+  font-size: 42px;
+  line-height: .9;
+  color: var(--vt-ink);
+  white-space: nowrap;
+}
+.vt-stat-delta {
+  font: 600 12px/1 ui-sans-serif, system-ui;
+}
+.vt-stat-sub {
+  font-size: 12.5px;
+  color: var(--vt-muted);
+  margin-top: 9px;
+}
+
+/* ---------- grids ---------- */
+.vt-grid {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+/* ---------- chart ---------- */
+.vt-chart-card {
+  padding: 24px 26px 20px;
+}
+.vt-chart-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+.vt-chart-title {
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 19px;
+  font-weight: 600;
+}
+.vt-chart-caption {
+  font-size: 12px;
+  color: var(--vt-muted);
+  margin-top: 2px;
+}
+.vt-legend {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font: 600 11.5px/1 ui-monospace, monospace;
+  color: var(--vt-muted);
+}
+.vt-legend-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--vt-accent);
+}
+.vt-chart {
+  display: flex;
+  align-items: flex-end;
+  height: 188px;
+  padding-top: 18px;
+}
+.vt-bar-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  height: 100%;
+  justify-content: flex-end;
+}
+.vt-bar-value {
+  font: 600 11px/1 ui-monospace, monospace;
+  color: var(--vt-ink);
+}
+.vt-bar-fill {
+  width: 100%;
+  max-width: 38px;
+  border-radius: 7px 7px 3px 3px;
+  transition: filter .15s;
+}
+.vt-bar-wrap:hover .vt-bar-fill {
+  filter: brightness(1.06);
+}
+.vt-bar-day {
+  font: 500 10.5px/1 ui-monospace, monospace;
+  color: var(--vt-muted);
+}
+
+/* ---------- session + conversion ---------- */
+.vt-side {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.vt-session {
+  padding: 22px 24px;
+  border: 1px solid var(--vt-line);
+  border-radius: 18px;
+  background: linear-gradient(150deg, var(--vt-accent) 0%, #a84d22 100%);
+  color: #fff;
+}
+.vt-session-eyebrow {
+  font: 600 11px/1 ui-monospace, monospace;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  opacity: .85;
+}
+.vt-session-clock {
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 1;
+  margin-top: 14px;
+}
+.vt-session-note {
+  font-size: 12.5px;
+  opacity: .88;
+  margin-top: 8px;
+}
+.vt-conv {
+  padding: 22px 24px;
+  flex: 1;
+}
+.vt-conv-eyebrow {
+  font: 600 11px/1 ui-monospace, monospace;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--vt-muted);
+}
+.vt-conv-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 13px;
+}
+.vt-conv-value {
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 600;
+  font-size: 38px;
+  line-height: 1;
+  color: var(--vt-accent);
+}
+.vt-conv-sub {
+  font-size: 12.5px;
+  color: var(--vt-muted);
+}
+
+/* progress track (conversion + sections) */
+.vt-track {
+  height: 7px;
+  border-radius: 50px;
+  background: var(--vt-accent-soft);
+  overflow: hidden;
+}
+.vt-track--conv {
+  margin-top: 16px;
+}
+.vt-track-fill {
+  height: 100%;
+  border-radius: 50px;
+  background: linear-gradient(90deg, var(--vt-accent), #a84d22);
+}
+
+/* ---------- activity ---------- */
+.vt-list-card {
+  padding: 24px 26px;
+}
+.vt-list-title {
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 19px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.vt-activity {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.vt-act-row {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--vt-line);
+}
+.vt-act-chip {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 14px;
+}
+.vt-act-text {
+  flex: 1;
+  font-size: 13.5px;
+  color: var(--vt-ink);
+}
+.vt-act-time {
+  font: 500 11.5px/1 ui-monospace, monospace;
+  color: var(--vt-muted);
+  white-space: nowrap;
+}
+
+/* ---------- sections ---------- */
+.vt-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.vt-sec-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 7px;
+}
+.vt-sec-name {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--vt-ink);
+}
+.vt-sec-pct {
+  font: 600 11.5px/1 ui-monospace, monospace;
+  color: var(--vt-muted);
+}
+
+/* ---------- footer note ---------- */
+.vt-foot {
+  margin-top: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 16px 20px;
+  border: 1px dashed var(--vt-line);
+  border-radius: 14px;
+  background: var(--vt-panel);
+}
+.vt-foot-note {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--vt-muted);
+  max-width: 660px;
+}
+.vt-reset {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 16px;
+  border: 1.5px solid var(--vt-line);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--vt-muted);
+  font: 600 12px/1 ui-sans-serif, system-ui;
+  cursor: pointer;
+  transition: all .15s;
+}
+.vt-reset:hover {
+  border-color: var(--vt-accent);
+  color: var(--vt-accent);
+}
+
+/* ---------- animations ---------- */
+@keyframes vtPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(52, 199, 89, .5); }
+  70%  { box-shadow: 0 0 0 7px rgba(52, 199, 89, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(52, 199, 89, 0); }
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 920px) {
+  .vt-shell { padding: 28px 22px 60px; }
+  .vt-stats { grid-template-columns: 1fr; }
+  .vt-grid  { grid-template-columns: 1fr; }
+}
